@@ -43,7 +43,7 @@ export default {
   data() {
     return { articles: [], categories: [], selectedCategory: '', keyword: '', currentPage: 1, pageSize: 10, total: 0 }
   },
-  filters: { excerpt(val) { return val ? val.substring(0, 100) + '...' : '' } },
+  filters: { excerpt(val) { if (!val) return ''; const text = val.replace(/<[^>]*>/g, ''); return text.length > 100 ? text.substring(0, 100) + '...' : text } },
   computed: { totalPages() { return Math.ceil(this.total / this.pageSize) } },
   async created() {
     if (this.$route.query.keyword) this.keyword = this.$route.query.keyword

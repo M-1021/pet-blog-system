@@ -95,3 +95,21 @@ export const reportApi = {
   getList: (params) => request.get('/report/list', { params }),
   handle: (id, action) => request.put('/report/handle/' + id, null, { params: { action } })
 }
+
+// ==================== 媒体上传相关接口 ====================
+export const mediaApi = {
+  uploadImage: (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return request.post('/media/upload/image', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  },
+  uploadVideo: (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return request.post('/media/upload/video', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  }
+}

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="community">
     <div class="page-header">
       <h2 class="page-title">💬 在线交流</h2>
@@ -25,10 +25,12 @@
       <span class="page-info">{{ currentPage }} / {{ Math.ceil(total / pageSize) }}</span>
       <button class="page-btn" :disabled="currentPage >= Math.ceil(total / pageSize)" @click="changePage(currentPage + 1)">下一页</button>
     </div>
-    <el-dialog title="发布帖子" :visible.sync="showPublish" width="600px">
+    <el-dialog title="发布帖子" :visible.sync="showPublish" width="640px">
       <el-form :model="postForm" label-width="60px">
         <el-form-item label="标题"><el-input v-model="postForm.title" placeholder="请输入标题"></el-input></el-form-item>
-        <el-form-item label="内容"><el-input v-model="postForm.content" type="textarea" :rows="6" placeholder="请输入内容"></el-input></el-form-item>
+        <el-form-item label="内容">
+          <rich-editor ref="postEditor" v-model="postForm.content" placeholder="请输入内容，支持插入图片、视频和表情" />
+        </el-form-item>
       </el-form>
       <span slot="footer">
         <button class="dialog-btn cancel" @click="showPublish = false">取消</button>
@@ -39,16 +41,23 @@
 </template>
 <script>
 import { postApi } from '../api'
+import RichEditor from '../components/RichEditor'
 export default {
   name: 'Community',
+  components: { RichEditor },
   data() { return { posts: [], currentPage: 1, pageSize: 10, total: 0, showPublish: false, postForm: { title: '', content: '' } } },
-  filters: { excerpt(val) { return val ? val.substring(0, 80) + '...' : '' } },
+  filters: { excerpt(val) { if (!val) return ''; const text = val.replace(/<[^>]*>/g, ''); return text.length > 80 ? text.substring(0, 80) + '...' : text } },
   created() { this.loadPosts() },
   methods: {
     async loadPosts() { const res = await postApi.getList({ page: this.currentPage, size: this.pageSize }); this.posts = res.data.records || []; this.total = res.data.total || 0 },
     async publishPost() {
       if (!this.postForm.title || !this.postForm.content) return this.$message.warning('请填写完整')
-      await postApi.create(this.postForm); this.$message.success('发布成功'); this.showPublish = false; this.postForm = { title: '', content: '' }; this.loadPosts()
+      const plainText = this.postForm.content.replace(/<[^>]*>/g, '').trim()
+      if (!plainText) return this.$message.warning('请填写内容')
+      await postApi.create({ title: this.postForm.title, content: this.postForm.content })
+      this.$message.success('发布成功'); this.showPublish = false; this.postForm = { title: '', content: '' }
+      if (this.$refs.postEditor) this.$refs.postEditor.clear()
+      this.loadPosts()
     },
     changePage(page) { this.currentPage = page; this.loadPosts() },
     formatTime(time) { if (!time) return ''; const diff = Date.now() - new Date(time).getTime(); const days = Math.floor(diff / 86400000); if (days > 0) return days + '天前'; const hours = Math.floor(diff / 3600000); if (hours > 0) return hours + '小时前'; const mins = Math.floor(diff / 60000); return mins > 0 ? mins + '分钟前' : '刚刚' }

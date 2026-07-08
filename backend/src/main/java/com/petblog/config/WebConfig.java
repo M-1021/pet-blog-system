@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -47,7 +48,19 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/article/like/**",    // 文章点赞（公开）
                         "/api/category/list",      // 分类列表（公开）
                         "/api/post/list",          // 帖子列表（公开）
-                        "/api/post/detail/**"      // 帖子详情（公开）
+                        "/api/post/detail/**",
+                        "/uploads/**"      // 帖子详情（公开）
                 );
+    }
+
+    /**
+     * 配置静态资源映射
+     * 将 /uploads/ 路径映射到本地文件存储目录
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String uploadDir = System.getProperty("user.dir") + "/uploads/";
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + uploadDir);
     }
 }

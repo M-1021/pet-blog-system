@@ -3,7 +3,7 @@
     <div class="detail-card">
       <h1 class="post-title">{{ post.title }}</h1>
       <p class="post-meta">发布者：{{ post.userName }} · {{ post.createTime }}</p>
-      <div class="post-content">{{ post.content }}</div>
+      <div class="post-content" v-html="post.content"></div>
     </div>
     <div class="reply-section">
       <h3 class="section-title">💬 回复 ({{ replies.length }})</h3>
@@ -40,7 +40,9 @@ export default {
 .detail-card { background: var(--surface); border-radius: var(--rounded-lg); padding: 24px; box-shadow: var(--shadow); margin-bottom: 16px; }
 .post-title { font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
 .post-meta { font-size: 13px; color: var(--ink-muted); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-.post-content { line-height: 1.8; font-size: 15px; color: var(--ink); white-space: pre-wrap; }
+.post-content { line-height: 1.8; font-size: 15px; color: var(--ink); word-wrap: break-word; overflow-wrap: break-word; }
+.post-content img { max-width: 100%; border-radius: 8px; margin: 8px 0; }
+.post-content video { max-width: 100%; border-radius: 8px; margin: 8px 0; }
 .reply-section { background: var(--surface); border-radius: var(--rounded-lg); padding: 20px; box-shadow: var(--shadow); }
 .section-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 16px; }
 .reply-input { margin-bottom: 20px; }

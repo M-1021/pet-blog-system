@@ -68,7 +68,7 @@ export default {
       tabs: [{ key: 'latest', label: '最新动态' }, { key: 'newest', label: '最新发布' }, { key: 'hot', label: '社区推荐' }]
     }
   },
-  filters: { excerpt(val) { return val ? val.substring(0, 80) + '...' : '' } },
+  filters: { excerpt(val) { if (!val) return ''; const text = val.replace(/<[^>]*>/g, ''); return text.length > 80 ? text.substring(0, 80) + '...' : text } },
   computed: {
     filteredArticles() {
       if (this.activeTab === 'hot') return [...this.articles].sort((a, b) => (b.likeCount || 0) - (a.likeCount || 0))

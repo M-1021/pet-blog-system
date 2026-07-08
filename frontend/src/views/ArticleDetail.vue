@@ -53,7 +53,9 @@ export default {
 .detail-card { background: var(--surface); border-radius: var(--rounded-lg); padding: 24px; box-shadow: var(--shadow); margin-bottom: 16px; }
 .article-title { font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
 .article-meta { font-size: 13px; color: var(--ink-muted); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-.article-content { line-height: 1.8; font-size: 15px; color: var(--ink); margin-bottom: 20px; white-space: pre-wrap; }
+.article-content { line-height: 1.8; font-size: 15px; color: var(--ink); margin-bottom: 20px; word-wrap: break-word; overflow-wrap: break-word; }
+.article-content img { max-width: 100%; border-radius: 8px; margin: 8px 0; }
+.article-content video { max-width: 100%; border-radius: 8px; margin: 8px 0; }
 .actions { display: flex; gap: 10px; padding-top: 16px; border-top: 1px solid var(--border); }
 .action-btn { padding: 8px 18px; border: 1px solid var(--border); border-radius: var(--rounded-full); background: var(--surface); color: var(--ink-secondary); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
 .action-btn:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
