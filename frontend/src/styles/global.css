@@ -1,0 +1,227 @@
+﻿/* ============================================
+   Meta/Facebook Bright Design Theme
+   ============================================ */
+
+:root {
+  --canvas: #f0f2f5;
+  --surface: #ffffff;
+  --surface-hover: #f2f2f2;
+  --surface-elevated: #ffffff;
+  --border: #e4e6eb;
+  --border-light: #f0f0f0;
+  --ink: #050505;
+  --ink-secondary: #65676b;
+  --ink-muted: #8a8d91;
+  --primary: #1877f2;
+  --primary-hover: #166fe5;
+  --primary-soft: #e7f3ff;
+  --success: #42b72a;
+  --success-soft: #e3f6e0;
+  --warning: #f7b928;
+  --critical: #e41e3f;
+  --critical-soft: #fde8ec;
+  --accent-pink: #f0284a;
+  --accent-purple: #a033c0;
+  --accent-green: #42b72a;
+  --accent-orange: #f7b928;
+  --rounded-sm: 4px;
+  --rounded-md: 8px;
+  --rounded-lg: 12px;
+  --rounded-xl: 16px;
+  --rounded-full: 9999px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--canvas) !important;
+  color: var(--ink) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  line-height: 1.34;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   Element UI Bright Theme Overrides
+   ============================================ */
+.el-button--default {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+.el-button--default:hover, .el-button--default:focus {
+  background: var(--surface-hover) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+.el-button--primary {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #fff !important;
+}
+.el-button--primary:hover, .el-button--primary:focus {
+  background: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+  color: #fff !important;
+}
+.el-button--text { color: var(--primary) !important; }
+.el-button--danger { background: var(--critical) !important; border-color: var(--critical) !important; }
+
+.el-input__inner {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+  border-radius: var(--rounded-md) !important;
+}
+.el-input__inner:focus { border-color: var(--primary) !important; }
+.el-input__inner::placeholder { color: var(--ink-muted) !important; }
+.el-input.is-disabled .el-input__inner {
+  background: var(--canvas) !important;
+  color: var(--ink-muted) !important;
+}
+
+.el-textarea__inner {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+  border-radius: var(--rounded-md) !important;
+}
+.el-textarea__inner:focus { border-color: var(--primary) !important; }
+.el-textarea__inner::placeholder { color: var(--ink-muted) !important; }
+
+.el-card {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border: none !important;
+  border-radius: var(--rounded-lg) !important;
+  box-shadow: var(--shadow) !important;
+}
+.el-card__header { border-bottom-color: var(--border) !important; color: var(--ink) !important; }
+
+.el-table { background: var(--surface) !important; color: var(--ink) !important; }
+.el-table th { background: var(--canvas) !important; color: var(--ink-secondary) !important; font-weight: 600 !important; }
+.el-table td, .el-table th.is-leaf { border-bottom-color: var(--border) !important; }
+.el-table--striped .el-table__body tr.el-table__row--striped td { background: var(--canvas) !important; }
+.el-table__body tr:hover > td { background: var(--primary-soft) !important; }
+.el-table::before, .el-table--border::after { background-color: var(--border) !important; }
+
+.el-form-item__label { color: var(--ink-secondary) !important; }
+
+.el-tabs__item { color: var(--ink-secondary) !important; }
+.el-tabs__item.is-active { color: var(--primary) !important; }
+.el-tabs__active-bar { background-color: var(--primary) !important; }
+.el-tabs__nav-wrap::after { background-color: var(--border) !important; }
+
+.el-dialog {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-radius: var(--rounded-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+.el-dialog__title { color: var(--ink) !important; }
+.el-dialog__headerbtn .el-dialog__close { color: var(--ink-secondary) !important; }
+.el-dialog__body { color: var(--ink-secondary) !important; }
+
+.el-message-box {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-radius: var(--rounded-lg) !important;
+}
+.el-message-box__title { color: var(--ink) !important; }
+.el-message-box__content { color: var(--ink-secondary) !important; }
+.el-message-box__btns .el-button--default {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+.el-message-box__btns .el-button--primary {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #fff !important;
+}
+.el-message-box__btns .el-button--danger {
+  background: var(--critical) !important;
+  border-color: var(--critical) !important;
+}
+
+.el-select-dropdown {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  border-radius: var(--rounded-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+.el-select-dropdown__item { color: var(--ink) !important; }
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover { background: var(--primary-soft) !important; }
+.el-select-dropdown__item.selected { color: var(--primary) !important; font-weight: 600; }
+
+.el-pager li {
+  background: var(--surface) !important;
+  color: var(--ink-secondary) !important;
+  border-radius: var(--rounded-md) !important;
+  margin: 0 2px;
+}
+.el-pager li.active { color: var(--primary) !important; font-weight: 700; }
+.el-pagination button { background: var(--surface) !important; color: var(--ink-secondary) !important; }
+.el-pagination button:disabled { background: var(--canvas) !important; color: var(--ink-muted) !important; }
+
+.el-radio-button__inner {
+  background: var(--surface) !important;
+  color: var(--ink-secondary) !important;
+  border-color: var(--border) !important;
+}
+.el-radio-button__orig-radio:checked + .el-radio-button__inner {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+.el-empty__description p { color: var(--ink-muted) !important; }
+
+.el-dropdown-menu {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  border-radius: var(--rounded-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+.el-dropdown-menu__item { color: var(--ink) !important; }
+.el-dropdown-menu__item:hover { background: var(--primary-soft) !important; color: var(--primary) !important; }
+
+.el-loading-mask { background: rgba(240, 242, 245, 0.8) !important; }
+.el-loading-spinner .el-loading-text { color: var(--ink-secondary) !important; }
+.el-loading-spinner .path { stroke: var(--primary) !important; }
+
+.el-popover {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+
+.el-table__empty-block { background: var(--surface) !important; }
+.el-input-number .el-input__inner { background: var(--surface) !important; }
+
+/* Message toast */
+.el-message {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+.el-message--success .el-message__content { color: var(--success) !important; }
+.el-message--warning .el-message__content { color: var(--warning) !important; }
+.el-message--error .el-message__content { color: var(--critical) !important; }

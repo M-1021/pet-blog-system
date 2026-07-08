@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Vue 应用入口文件
  * 初始化 Vue 实例，注册 Element UI 组件库和路由
  */
@@ -8,6 +8,7 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './styles/global.css'
 
 // 注册 Element UI 组件库（全局可用）
 Vue.use(ElementUI)
