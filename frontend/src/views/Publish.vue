@@ -48,7 +48,8 @@ export default {
     if (editId) {
       this.isEdit = true
       const res = await articleApi.getDetail(editId)
-      this.form = { id: res.data.id, title: res.data.title, content: res.data.content, categoryId: res.data.categoryId }
+      const article = res.data.article
+      this.form = { id: article.id, title: article.title, content: article.content, categoryId: article.categoryId }
     }
   },
   methods: {

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="home">
     <div class="welcome-header">
       <h1 class="forum-title">🐾 宠物论坛</h1>
@@ -148,7 +148,7 @@ export default {
 .tag-orange { background: #fff8e1; color: #e67700; }
 .tag-pink { background: var(--critical-soft); color: var(--accent-pink); }
 .tag-teal { background: #e0f7fa; color: #00838f; }
-.topic-excerpt { font-size: 13px; color: var(--ink-secondary); line-height: 1.5; }
+.topic-excerpt { font-size: 13px; color: var(--ink-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 2.8em; }
 .topic-author { width: 100px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .author-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; overflow: hidden; }
 .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -167,4 +167,16 @@ export default {
 .page-btn:hover:not(:disabled) { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
 .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .page-info { font-size: 14px; color: var(--ink-secondary); font-weight: 500; }
+
+@media (max-width: 768px) {
+  .topic-header { display: none; }
+  .topic-row { flex-wrap: wrap; padding: 12px 0; }
+  .topic-cover { width: 56px; height: 42px; min-width: 56px; }
+  .topic-author, .topic-replies, .topic-views, .topic-activity { display: none; }
+  .topic-main { flex: 1; min-width: 0; }
+  .topic-title { font-size: 15px; }
+  .topic-excerpt { font-size: 13px; -webkit-line-clamp: 2; max-height: 2.6em; }
+  .content-tabs { padding: 3px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; }
+}
 </style>

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="post-detail" v-if="post.id">
     <div class="detail-card">
       <h1 class="post-title">{{ post.title }}</h1>

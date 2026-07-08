@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="my-articles">
     <div class="page-header">
       <h2 class="page-title">📄 我的文章</h2>

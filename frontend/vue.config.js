@@ -1,10 +1,8 @@
-/**
- * Vue CLI 配置文件
- * 配置开发服务器端口和代理
- */
-module.exports = {
+锘縨odule.exports = {
   devServer: {
     port: 8081,
+    host: '0.0.0.0',
+    allowedHosts: 'all',
     proxy: {
       '/api': {
         target: 'http://localhost:8080',

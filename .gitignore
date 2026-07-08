@@ -19,3 +19,10 @@ Thumbs.db
 
 # 上传文件
 uploads/
+backend/uploads/
+
+# 隧道工具
+cloudflared.exe
+start-tunnel.ps1
+# 其他
+config.yml

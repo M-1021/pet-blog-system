@@ -75,7 +75,7 @@ export default {
 .post-title { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 6px; line-height: 1.4; }
 .post-meta { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); margin-bottom: 6px; }
 .meta-sep { color: var(--border); }
-.post-excerpt { font-size: 14px; color: var(--ink-secondary); line-height: 1.6; }
+.post-excerpt { font-size: 14px; color: var(--ink-secondary); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 3.2em; }
 .pagination { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 20px 0; }
 .page-btn { padding: 8px 20px; border: 1px solid var(--border); border-radius: var(--rounded-full); background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; box-shadow: var(--shadow-sm); }
 .page-btn:hover:not(:disabled) { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
@@ -86,4 +86,13 @@ export default {
 .dialog-btn.cancel:hover { background: var(--canvas); }
 .dialog-btn.primary { border: none; background: var(--primary); color: #fff; }
 .dialog-btn.primary:hover { background: var(--primary-hover); }
+
+@media (max-width: 768px) {
+  .page-header { flex-direction: column; gap: 10px; align-items: stretch; }
+  .page-title { font-size: 20px; }
+  .publish-btn { width: 100%; text-align: center; }
+  .post-item { padding: 12px; }
+  .post-title { font-size: 15px; }
+  .post-excerpt { font-size: 13px; -webkit-line-clamp: 2; max-height: 2.6em; }
+}
 </style>

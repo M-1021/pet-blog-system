@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="profile">
     <h2 class="page-title">👤 个人中心</h2>
     <div class="profile-card">

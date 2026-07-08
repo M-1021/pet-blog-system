@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="login-page">
     <div class="login-card">
       <h2 class="card-title">用户登录</h2>

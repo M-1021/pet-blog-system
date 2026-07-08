@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="article-detail" v-if="article.id">
     <div class="detail-card">
       <h1 class="article-title">{{ article.title }}</h1>
@@ -41,9 +41,20 @@ export default {
   data() { return { article: {}, comments: [], newComment: '', isLiked: false, showReport: false, reportReason: '' } },
   async created() { await this.loadArticle(); await this.loadComments() },
   methods: {
-    async loadArticle() { const res = await articleApi.getDetail(this.$route.params.id); this.article = res.data },
+    async loadArticle() {
+      const res = await articleApi.getDetail(this.$route.params.id)
+      this.article = res.data.article
+      this.isLiked = res.data.liked
+    },
     async loadComments() { const res = await commentApi.getList(this.$route.params.id); this.comments = res.data },
-    async handleLike() { if (!this.$store.getters.isLoggedIn) return this.$message.warning('请先登录'); const res = await articleApi.toggleLike(this.article.id); this.isLiked = res.data; this.article.likeCount += this.isLiked ? 1 : -1 },
+    async handleLike() {
+      if (!this.$store.getters.isLoggedIn) return this.$message.warning('请先登录')
+      try {
+        const res = await articleApi.toggleLike(this.article.id)
+        this.isLiked = res.data.liked
+        this.article.likeCount = res.data.likeCount
+      } catch (e) { /* handled by interceptor */ }
+    },
     async submitComment() { if (!this.newComment.trim()) return this.$message.warning('请输入评论内容'); await commentApi.create({ articleId: this.article.id, content: this.newComment }); this.newComment = ''; this.$message.success('评论成功'); this.loadComments(); this.article.commentCount++ },
     async submitReport() { if (!this.reportReason.trim()) return this.$message.warning('请输入举报原因'); await reportApi.create({ articleId: this.article.id, reason: this.reportReason }); this.$message.success('举报已提交'); this.showReport = false; this.reportReason = '' }
   }

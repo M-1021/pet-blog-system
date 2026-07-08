@@ -1,40 +1,39 @@
-﻿<template>
+<template>
   <div id="app" class="app-layout">
+    <!-- 移动端顶部栏 -->
+    <div class="mobile-header">
+      <button class="hamburger" @click="mobileMenuOpen = !mobileMenuOpen">☰</button>
+      <span class="mobile-logo">🐾 宠物论坛</span>
+    </div>
+
     <!-- 左侧导航栏 -->
-    <aside class="sidebar">
+    <aside class="sidebar" :class="{ 'mobile-open': mobileMenuOpen }">
       <div class="sidebar-logo" @click="$router.push('/')">
         <span class="logo-icon">🐾</span>
         <span class="logo-text">宠物论坛</span>
       </div>
       <nav class="sidebar-nav">
-        <router-link to="/" class="nav-item" :class="{ active: $route.path === '/' }">
-          <i class="nav-icon">🏠</i>
-          <span>首页</span>
+        <router-link to="/" class="nav-item" :class="{ active: $route.path === '/' }" @click.native="mobileMenuOpen = false">
+          <i class="nav-icon">🏠</i><span>首页</span>
         </router-link>
-        <router-link to="/knowledge" class="nav-item" :class="{ active: $route.path === '/knowledge' }">
-          <i class="nav-icon">📚</i>
-          <span>宠物知识</span>
+        <router-link to="/knowledge" class="nav-item" :class="{ active: $route.path === '/knowledge' }" @click.native="mobileMenuOpen = false">
+          <i class="nav-icon">📚</i><span>宠物知识</span>
         </router-link>
-        <router-link to="/community" class="nav-item" :class="{ active: $route.path === '/community' }">
-          <i class="nav-icon">💬</i>
-          <span>在线交流</span>
+        <router-link to="/community" class="nav-item" :class="{ active: $route.path === '/community' }" @click.native="mobileMenuOpen = false">
+          <i class="nav-icon">💬</i><span>在线交流</span>
         </router-link>
         <template v-if="isLoggedIn">
-          <router-link to="/publish" class="nav-item" :class="{ active: $route.path === '/publish' }">
-            <i class="nav-icon">✏️</i>
-            <span>发布文章</span>
+          <router-link to="/publish" class="nav-item" :class="{ active: $route.path === '/publish' }" @click.native="mobileMenuOpen = false">
+            <i class="nav-icon">✏️</i><span>发布文章</span>
           </router-link>
-          <router-link to="/my-articles" class="nav-item" :class="{ active: $route.path === '/my-articles' }">
-            <i class="nav-icon">📄</i>
-            <span>我的文章</span>
+          <router-link to="/my-articles" class="nav-item" :class="{ active: $route.path === '/my-articles' }" @click.native="mobileMenuOpen = false">
+            <i class="nav-icon">📄</i><span>我的文章</span>
           </router-link>
-          <router-link to="/profile" class="nav-item" :class="{ active: $route.path === '/profile' }">
-            <i class="nav-icon">👤</i>
-            <span>个人中心</span>
+          <router-link to="/profile" class="nav-item" :class="{ active: $route.path === '/profile' }" @click.native="mobileMenuOpen = false">
+            <i class="nav-icon">👤</i><span>个人中心</span>
           </router-link>
-          <router-link v-if="userInfo.role === 1" to="/admin" class="nav-item" :class="{ active: $route.path === '/admin' }">
-            <i class="nav-icon">⚙️</i>
-            <span>后台管理</span>
+          <router-link v-if="userInfo.role === 1" to="/admin" class="nav-item" :class="{ active: $route.path === '/admin' }" @click.native="mobileMenuOpen = false">
+            <i class="nav-icon">⚙️</i><span>后台管理</span>
           </router-link>
         </template>
       </nav>
@@ -47,13 +46,15 @@
           <button class="btn-logout" @click="handleLogout">退出登录</button>
         </template>
         <template v-else>
-          <router-link to="/login" class="login-btn">
-            <i class="nav-icon">→</i>
-            <span>去登录</span>
+          <router-link to="/login" class="login-btn" @click.native="mobileMenuOpen = false">
+            <i class="nav-icon">→</i><span>去登录</span>
           </router-link>
         </template>
       </div>
     </aside>
+
+    <!-- 移动端菜单遮罩 -->
+    <div class="mobile-overlay" v-if="mobileMenuOpen" @click="mobileMenuOpen = false"></div>
 
     <!-- 中间主内容 -->
     <main class="main-content">
@@ -106,7 +107,8 @@ export default {
       searchKeyword: '',
       filterCategory: '',
       categories: [],
-      latestComments: []
+      latestComments: [],
+      mobileMenuOpen: false
     }
   },
   computed: {
@@ -123,39 +125,28 @@ export default {
   methods: {
     handleLogout() {
       this.$store.dispatch('logout')
-      this.$message.success('已退出登录')
-      this.$router.push('/')
+      this.$router.push('/login')
     },
     handleSearch() {
-      if (this.$route.path !== '/knowledge') {
+      if (this.searchKeyword.trim()) {
         this.$router.push({ path: '/knowledge', query: { keyword: this.searchKeyword } })
-      } else {
-        this.$root.$emit('search', this.searchKeyword)
       }
     },
     handleFilter() {
-      if (this.$route.path !== '/knowledge') {
-        this.$router.push({ path: '/knowledge', query: { categoryId: this.filterCategory } })
-      } else {
-        this.$root.$emit('filter-category', this.filterCategory)
-      }
+      this.$router.push({ path: '/knowledge', query: { category: this.filterCategory } })
     }
   }
 }
 </script>
 
 <style>
-/* ============================================
-   Layout - Meta/Facebook Bright Style
-   ============================================ */
 .app-layout {
-  display: flex !important;
+  display: flex;
   min-height: 100vh;
-  max-width: 1400px;
-  margin: 0 auto;
+  background: var(--canvas);
 }
 
-/* Left Sidebar */
+/* ========== 左侧导航栏 ========== */
 .sidebar {
   width: 220px;
   min-width: 220px;
@@ -273,14 +264,14 @@ export default {
 
 .login-btn:hover { background: var(--primary-hover); color: #fff; text-decoration: none; }
 
-/* Main Content */
+/* ========== 主内容区 ========== */
 .main-content {
   flex: 1;
   min-width: 0;
   padding: 0 20px;
 }
 
-/* Right Sidebar */
+/* ========== 右侧信息栏 ========== */
 .right-sidebar {
   width: 280px;
   min-width: 280px;
@@ -378,5 +369,70 @@ export default {
   font-size: 12px;
   color: var(--ink-muted);
   text-align: center;
+}
+
+/* ==================== 移动端响应式 ==================== */
+.mobile-header { display: none; }
+.mobile-overlay { display: none; }
+
+@media (max-width: 1024px) {
+  .right-sidebar { display: none; }
+}
+
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+  }
+  .hamburger {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--rounded-md);
+    font-size: 22px;
+    padding: 4px 10px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .mobile-logo { font-size: 18px; font-weight: 700; color: var(--primary); }
+
+  .app-layout { flex-direction: column; }
+
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    top: 0;
+    height: 100vh;
+    z-index: 1002;
+    transition: left 0.3s ease;
+    box-shadow: none;
+    width: 260px;
+    min-width: 260px;
+  }
+  .sidebar.mobile-open {
+    left: 0;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+  }
+
+  .mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1001;
+  }
+
+  .right-sidebar { display: none; }
+
+  .main-content {
+    padding: 12px;
+    width: 100%;
+  }
 }
 </style>

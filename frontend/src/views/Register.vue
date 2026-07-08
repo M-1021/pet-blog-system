@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="register-page">
     <div class="register-card">
       <h2 class="card-title">用户注册</h2>

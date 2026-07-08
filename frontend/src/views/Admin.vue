@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="admin">
     <h2 class="page-title">⚙️ 后台管理</h2>
     <div class="admin-card">

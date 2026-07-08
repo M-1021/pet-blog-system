@@ -1,10 +1,16 @@
-﻿<template>
+<template>
   <div class="knowledge">
     <h2 class="page-title">📖 宠物知识</h2>
     <div class="filter-bar">
       <div class="category-tabs">
         <button class="cat-tab" :class="{ active: selectedCategory === '' }" @click="selectCategory('')">全部</button>
         <button v-for="c in categories" :key="c.id" class="cat-tab" :class="{ active: selectedCategory === c.id }" @click="selectCategory(c.id)">{{ c.name }}</button>
+      </div>
+      <div class="category-select-wrap">
+        <select class="category-select" :value="selectedCategory" @change="selectCategory($event.target.value)">
+          <option value="">全部分类</option>
+          <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
+        </select>
       </div>
       <div class="search-box">
         <input v-model="keyword" placeholder="🔍 搜索文章..." class="search-input" @keyup.enter="loadArticles" />
@@ -70,6 +76,7 @@ export default {
 .page-title { font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 16px; }
 .filter-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
 .category-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.category-select-wrap { display: none; }
 .cat-tab { padding: 6px 16px; border: 1px solid var(--border); border-radius: var(--rounded-full); background: var(--surface); color: var(--ink-secondary); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; box-shadow: var(--shadow-sm); }
 .cat-tab:hover { border-color: var(--primary); color: var(--primary); }
 .cat-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
@@ -85,10 +92,39 @@ export default {
 .article-title { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 6px; line-height: 1.4; }
 .article-meta { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); margin-bottom: 6px; }
 .meta-sep { color: var(--border); }
-.article-excerpt { font-size: 14px; color: var(--ink-secondary); line-height: 1.6; }
+.article-excerpt { font-size: 14px; color: var(--ink-secondary); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 3.2em; }
 .pagination { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 20px 0; }
 .page-btn { padding: 8px 20px; border: 1px solid var(--border); border-radius: var(--rounded-full); background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; box-shadow: var(--shadow-sm); }
 .page-btn:hover:not(:disabled) { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
 .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .page-info { font-size: 14px; color: var(--ink-secondary); font-weight: 500; }
+
+@media (max-width: 768px) {
+  .filter-bar { flex-direction: column; align-items: stretch; }
+  .category-tabs { display: none; }
+  .category-select-wrap { display: block; }
+  .category-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--rounded-full);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2365676b' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .category-select:focus { border-color: var(--primary); }
+  .search-box { width: 100%; }
+  .search-input { flex: 1; width: auto; }
+  .article-item { padding: 12px; }
+  .article-title { font-size: 15px; }
+  .article-excerpt { font-size: 13px; -webkit-line-clamp: 2; max-height: 2.6em; }
+}
 </style>
