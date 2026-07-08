@@ -162,7 +162,9 @@ pet-blog-system/
 │           └── Admin.vue             # 后台管理
 │
 ├── sql/
-│   └── init.sql                      # 数据库初始化脚本
+├── init.sql                          # 数据库初始化脚本（合并版，推荐）
+│   ├── seed_content.sql                # 丰富内容种子数据
+│   └── alter_add_view_count.sql        # 历史迁移脚本
 │
 └── README.md                         # 项目说明文档
 ```
@@ -191,8 +193,11 @@ pet-blog-system/
 2. 执行初始化脚本创建数据库和表：
 
 ```bash
-# 方式一：命令行执行
+# 方式一：命令行执行（推荐，合并版脚本）
 mysql -u root -p < sql/init.sql
+
+# 如果需要更多演示数据，可额外导入
+mysql -u root -p < sql/seed_content.sql
 
 # 方式二：在 MySQL 客户端中执行
 source /path/to/sql/init.sql
