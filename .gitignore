@@ -26,3 +26,6 @@ cloudflared.exe
 start-tunnel.ps1
 # 其他
 config.yml
+
+# Codex 本地技能配置
+skills/
