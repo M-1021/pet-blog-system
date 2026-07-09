@@ -20,26 +20,11 @@
         </div>
       </div>
       <div class="header-stats">
-        <div class="stat-item">
-          <span class="stat-num">{{ stats.topics || 0 }}</span>
-          <span class="stat-label">话题</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">{{ stats.replies || 0 }}</span>
-          <span class="stat-label">回复</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">{{ stats.likes || 0 }}</span>
-          <span class="stat-label">点赞</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">{{ stats.favorites || 0 }}</span>
-          <span class="stat-label">收藏</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num highlight">{{ stats.points || 10 }}</span>
-          <span class="stat-label">积分</span>
-        </div>
+        <div class="stat-item"><span class="stat-num">{{ stats.topics || 0 }}</span><span class="stat-label">话题</span></div>
+        <div class="stat-item"><span class="stat-num">{{ stats.replies || 0 }}</span><span class="stat-label">回复</span></div>
+        <div class="stat-item"><span class="stat-num">{{ stats.likes || 0 }}</span><span class="stat-label">点赞</span></div>
+        <div class="stat-item"><span class="stat-num">{{ stats.favorites || 0 }}</span><span class="stat-label">收藏</span></div>
+        <div class="stat-item"><span class="stat-num highlight">{{ stats.points || 10 }}</span><span class="stat-label">积分</span></div>
       </div>
     </div>
 
@@ -62,7 +47,6 @@
       <div class="section-card">
         <h2 class="section-title">账户</h2>
         <p class="section-desc">管理你的账户信息和关联账号</p>
-
         <h3 class="sub-title">基本信息</h3>
 
         <!-- 头像上传 -->
@@ -78,7 +62,9 @@
             <div class="avatar-upload-info">
               <p class="upload-label">头像</p>
               <p class="upload-hint">上传头像</p>
-              <button class="upload-btn" @click="triggerAvatarUpload">📤 上传头像</button>
+              <button class="upload-btn" @click="triggerAvatarUpload" :disabled="uploading">
+                {{ uploading ? '⏳ 上传中...' : '📤 上传头像' }}
+              </button>
             </div>
           </div>
         </div>
@@ -86,8 +72,8 @@
         <!-- 用户名 -->
         <div class="field-group">
           <label class="field-label">用户名</label>
-          <input class="field-input" v-model="form.username" />
-          <p class="field-hint">用户名可修改，但需要保证唯一性</p>
+          <input class="field-input" v-model="form.username" disabled />
+          <p class="field-hint">用户名不可修改</p>
         </div>
 
         <!-- 昵称 -->
@@ -111,13 +97,11 @@
           <p class="field-hint">绑定手机可用于找回密码</p>
         </div>
 
-        <!-- 自定义状态 -->
+        <!-- 个人简介 -->
         <div class="field-group">
-          <label class="field-label">自定义状态</label>
-          <div class="status-input-wrapper">
-            <span class="status-icon">😊</span>
-            <input class="field-input" v-model="form.bio" placeholder="设置一个个性化状态，让其他人了解你当前的状态" />
-          </div>
+          <label class="field-label">个人简介</label>
+          <textarea class="field-textarea" v-model="form.bio" rows="3" placeholder="写一段简介，让大家更了解你..."></textarea>
+          <p class="field-hint">最多 500 字</p>
         </div>
 
         <div class="form-actions">
@@ -131,13 +115,10 @@
       <div class="section-card">
         <h2 class="section-title">个人资料</h2>
         <p class="section-desc">管理你公开显示的个人信息</p>
-
         <div class="field-group">
           <label class="field-label">个人简介</label>
           <textarea class="field-textarea" v-model="form.bio" rows="4" placeholder="写一段简介，让大家更了解你..."></textarea>
-          <p class="field-hint">最多 500 字</p>
         </div>
-
         <div class="form-actions">
           <button class="save-btn" @click="handleSave">💾 保存更改</button>
         </div>
@@ -150,26 +131,10 @@
         <h2 class="section-title">📋 概览</h2>
         <p class="section-desc">你的个人活动概览</p>
         <div class="overview-grid">
-          <div class="overview-item">
-            <span class="overview-icon">📝</span>
-            <span class="overview-num">{{ stats.topics || 0 }}</span>
-            <span class="overview-label">发布话题</span>
-          </div>
-          <div class="overview-item">
-            <span class="overview-icon">💬</span>
-            <span class="overview-num">{{ stats.replies || 0 }}</span>
-            <span class="overview-label">发表回复</span>
-          </div>
-          <div class="overview-item">
-            <span class="overview-icon">❤️</span>
-            <span class="overview-num">{{ stats.likes || 0 }}</span>
-            <span class="overview-label">获得点赞</span>
-          </div>
-          <div class="overview-item">
-            <span class="overview-icon">⭐</span>
-            <span class="overview-num">{{ stats.points || 10 }}</span>
-            <span class="overview-label">积分</span>
-          </div>
+          <div class="overview-item"><span class="overview-icon">📝</span><span class="overview-num">{{ stats.topics || 0 }}</span><span class="overview-label">发布话题</span></div>
+          <div class="overview-item"><span class="overview-icon">💬</span><span class="overview-num">{{ stats.replies || 0 }}</span><span class="overview-label">发表回复</span></div>
+          <div class="overview-item"><span class="overview-icon">❤️</span><span class="overview-num">{{ stats.likes || 0 }}</span><span class="overview-label">获得点赞</span></div>
+          <div class="overview-item"><span class="overview-icon">⭐</span><span class="overview-num">{{ stats.points || 10 }}</span><span class="overview-label">积分</span></div>
         </div>
       </div>
     </div>
@@ -186,7 +151,7 @@
 </template>
 
 <script>
-import { userApi } from '../api'
+import { userApi, mediaApi } from '../api'
 export default {
   name: 'Profile',
   data() {
@@ -195,6 +160,7 @@ export default {
       stats: { topics: 0, replies: 0, likes: 0, favorites: 0, points: 10 },
       activeTab: 'settings',
       activeSettingTab: 'account',
+      uploading: false,
       mainTabs: [
         { key: 'overview', icon: '👤', label: '概览' },
         { key: 'activity', icon: '📈', label: '活动' },
@@ -222,7 +188,7 @@ export default {
     triggerAvatarUpload() {
       this.$refs.avatarInput.click()
     },
-    handleAvatarChange(e) {
+    async handleAvatarChange(e) {
       const file = e.target.files[0]
       if (!file) return
       if (!file.type.startsWith('image/')) {
@@ -231,18 +197,33 @@ export default {
       if (file.size > 5 * 1024 * 1024) {
         return this.$message.warning('图片不能超过 5MB')
       }
-      const reader = new FileReader()
-      reader.onload = (ev) => {
-        this.form.avatar = ev.target.result
+      // 通过后端上传接口上传头像
+      this.uploading = true
+      try {
+        const res = await mediaApi.uploadImage(file)
+        // res.data 是上传后的 URL，如 /uploads/image/xxx.jpg
+        this.form.avatar = res.data
+        this.$message.success('头像上传成功')
+      } catch (err) {
+        this.$message.error('头像上传失败：' + (err.message || '未知错误'))
+      } finally {
+        this.uploading = false
+        e.target.value = '' // 清空 input，允许重新选择同一文件
       }
-      reader.readAsDataURL(file)
     },
     handleAvatarError(e) {
       e.target.style.display = 'none'
     },
     async handleSave() {
       try {
-        const saveData = { ...this.form }
+        // 构造要发送的数据，排除敏感字段
+        const saveData = {
+          nickname: this.form.nickname,
+          avatar: this.form.avatar,
+          email: this.form.email,
+          phone: this.form.phone,
+          bio: this.form.bio
+        }
         await userApi.updateInfo(saveData)
         this.$store.commit('SET_USER_INFO', saveData)
         this.$message.success('保存成功')
@@ -270,358 +251,79 @@ export default {
 <style scoped>
 .profile-page { max-width: 800px; margin: 0 auto; padding: 20px 0; }
 
-/* 用户卡片 */
 .profile-header {
-  background: var(--surface);
-  border-radius: var(--rounded-lg);
-  padding: 28px;
-  box-shadow: var(--shadow);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  background: var(--surface); border-radius: var(--rounded-lg); padding: 28px; box-shadow: var(--shadow);
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
 }
-
 .header-left { display: flex; gap: 20px; align-items: center; }
-
-.avatar-wrapper {
-  position: relative;
-  width: 88px;
-  height: 88px;
-  min-width: 88px;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.avatar-wrapper .avatar-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36px;
-  font-weight: 700;
-  color: #fff;
-}
-
-.avatar-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  text-align: center;
-  padding: 4px;
-  font-size: 11px;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
+.avatar-wrapper { position: relative; width: 88px; height: 88px; min-width: 88px; border-radius: 50%; overflow: hidden; cursor: pointer; }
+.avatar-wrapper .avatar-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.avatar-placeholder { width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: #fff; }
+.avatar-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: #fff; text-align: center; padding: 4px; font-size: 11px; opacity: 0; transition: opacity 0.2s; }
 .avatar-wrapper:hover .avatar-overlay { opacity: 1; }
-
 .header-info { flex: 1; }
-
 .display-name { font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
 .join-date { font-size: 13px; color: var(--ink-muted); margin-bottom: 10px; }
-
-.edit-btn {
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--rounded-md);
-  background: var(--surface);
-  color: var(--ink-secondary);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
+.edit-btn { padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--rounded-md); background: var(--surface); color: var(--ink-secondary); font-size: 13px; cursor: pointer; transition: all 0.15s; }
 .edit-btn:hover { background: var(--canvas); border-color: var(--ink-muted); color: var(--ink); }
-
 .header-stats { display: flex; gap: 24px; }
-
 .stat-item { text-align: center; }
 .stat-num { display: block; font-size: 22px; font-weight: 700; color: var(--ink); }
 .stat-num.highlight { color: var(--primary); }
 .stat-label { font-size: 12px; color: var(--ink-muted); }
 
-/* 一级标签栏 */
-.nav-tabs {
-  display: flex;
-  gap: 0;
-  background: var(--surface);
-  border-radius: var(--rounded-lg);
-  padding: 4px;
-  box-shadow: var(--shadow);
-  margin-bottom: 16px;
-  overflow-x: auto;
-}
-
-.nav-tab {
-  padding: 10px 16px;
-  border: none;
-  background: none;
-  color: var(--ink-secondary);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: var(--rounded-md);
-  transition: all 0.15s;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
+.nav-tabs { display: flex; gap: 0; background: var(--surface); border-radius: var(--rounded-lg); padding: 4px; box-shadow: var(--shadow); margin-bottom: 16px; overflow-x: auto; }
+.nav-tab { padding: 10px 16px; border: none; background: none; color: var(--ink-secondary); font-size: 14px; font-weight: 500; cursor: pointer; border-radius: var(--rounded-md); transition: all 0.15s; white-space: nowrap; display: flex; align-items: center; gap: 4px; }
 .nav-tab:hover { background: var(--canvas); color: var(--ink); }
-
-.nav-tab.active {
-  background: var(--primary);
-  color: #fff;
-  font-weight: 600;
-}
-
+.nav-tab.active { background: var(--primary); color: #fff; font-weight: 600; }
 .tab-icon { font-size: 14px; }
 
-/* 二级标签栏 */
-.sub-tabs {
-  display: flex;
-  gap: 0;
-  background: var(--surface);
-  border-radius: var(--rounded-lg);
-  padding: 4px;
-  box-shadow: var(--shadow);
-  margin-bottom: 16px;
-  overflow-x: auto;
-}
-
-.sub-tab {
-  padding: 8px 14px;
-  border: none;
-  background: none;
-  color: var(--ink-secondary);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: var(--rounded-md);
-  transition: all 0.15s;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
+.sub-tabs { display: flex; gap: 0; background: var(--surface); border-radius: var(--rounded-lg); padding: 4px; box-shadow: var(--shadow); margin-bottom: 16px; overflow-x: auto; }
+.sub-tab { padding: 8px 14px; border: none; background: none; color: var(--ink-secondary); font-size: 13px; font-weight: 500; cursor: pointer; border-radius: var(--rounded-md); transition: all 0.15s; white-space: nowrap; display: flex; align-items: center; gap: 4px; }
 .sub-tab:hover { background: var(--canvas); color: var(--ink); }
+.sub-tab.active { background: var(--ink); color: var(--canvas); font-weight: 600; }
 
-.sub-tab.active {
-  background: var(--ink);
-  color: var(--canvas);
-  font-weight: 600;
-}
-
-/* 设置内容 */
 .settings-content { margin-top: 0; }
-
-.section-card {
-  background: var(--surface);
-  border-radius: var(--rounded-lg);
-  padding: 28px;
-  box-shadow: var(--shadow);
-}
-
+.section-card { background: var(--surface); border-radius: var(--rounded-lg); padding: 28px; box-shadow: var(--shadow); }
 .section-title { font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
 .section-desc { font-size: 14px; color: var(--ink-muted); margin-bottom: 24px; }
 .sub-title { font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 20px; }
 
-/* 头像上传区域 */
-.avatar-upload-area {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 28px;
-}
-
-.avatar-preview {
-  width: 64px;
-  height: 64px;
-  min-width: 64px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  border: 2px solid var(--border);
-}
-
+.avatar-upload-area { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+.avatar-preview { width: 64px; height: 64px; min-width: 64px; border-radius: 50%; overflow: hidden; position: relative; cursor: pointer; border: 2px solid var(--border); }
 .avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
-
-.avatar-placeholder-sm {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: 700;
-  color: #fff;
-}
-
-.upload-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
+.avatar-placeholder-sm { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: #fff; }
+.upload-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; font-size: 20px; opacity: 0; transition: opacity 0.2s; }
 .avatar-preview:hover .upload-overlay { opacity: 1; }
-
 .avatar-upload-info { flex: 1; }
 .upload-label { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
 .upload-hint { font-size: 13px; color: var(--ink-muted); margin-bottom: 8px; }
+.upload-btn { padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--rounded-md); background: var(--surface); color: var(--ink-secondary); font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.upload-btn:hover:not(:disabled) { background: var(--canvas); border-color: var(--primary); color: var(--primary); }
+.upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.upload-btn {
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--rounded-md);
-  background: var(--surface);
-  color: var(--ink-secondary);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.upload-btn:hover { background: var(--canvas); border-color: var(--primary); color: var(--primary); }
-
-/* 表单字段 */
 .field-group { margin-bottom: 24px; }
-
-.field-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-
-.field-input {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--rounded-md);
-  background: var(--surface);
-  color: var(--ink);
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.15s;
-}
-
+.field-label { display: block; font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.field-input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--rounded-md); background: var(--surface); color: var(--ink); font-size: 15px; outline: none; transition: border-color 0.15s; }
 .field-input:focus { border-color: var(--primary); }
 .field-input::placeholder { color: var(--ink-muted); }
-
-.field-textarea {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--rounded-md);
-  background: var(--surface);
-  color: var(--ink);
-  font-size: 15px;
-  outline: none;
-  resize: vertical;
-  font-family: inherit;
-  transition: border-color 0.15s;
-}
-
+.field-input:disabled { background: var(--canvas); color: var(--ink-muted); cursor: not-allowed; }
+.field-textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--rounded-md); background: var(--surface); color: var(--ink); font-size: 15px; outline: none; resize: vertical; font-family: inherit; transition: border-color 0.15s; }
 .field-textarea:focus { border-color: var(--primary); }
 .field-textarea::placeholder { color: var(--ink-muted); }
+.field-hint { font-size: 12px; color: var(--ink-muted); margin-top: 4px; }
 
-.field-hint {
-  font-size: 12px;
-  color: var(--ink-muted);
-  margin-top: 4px;
-}
-
-.status-input-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--rounded-md);
-  padding: 0 14px;
-  background: var(--surface);
-  transition: border-color 0.15s;
-}
-
-.status-input-wrapper:focus-within { border-color: var(--primary); }
-
-.status-icon { font-size: 16px; }
-
-.status-input-wrapper .field-input {
-  border: none;
-  padding: 10px 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.status-input-wrapper .field-input:focus { box-shadow: none; }
-
-/* 保存按钮 */
-.form-actions {
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  margin-top: 8px;
-}
-
-.save-btn {
-  padding: 10px 28px;
-  border: none;
-  border-radius: var(--rounded-full);
-  background: var(--primary);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
+.form-actions { padding-top: 16px; border-top: 1px solid var(--border); margin-top: 8px; }
+.save-btn { padding: 10px 28px; border: none; border-radius: var(--rounded-full); background: var(--primary); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
 .save-btn:hover { background: var(--primary-hover); }
 
-/* 概览 */
-.overview-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.overview-item {
-  text-align: center;
-  padding: 20px;
-  background: var(--canvas);
-  border-radius: var(--rounded-lg);
-}
-
+.overview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+.overview-item { text-align: center; padding: 20px; background: var(--canvas); border-radius: var(--rounded-lg); }
 .overview-icon { font-size: 24px; display: block; margin-bottom: 8px; }
 .overview-num { font-size: 28px; font-weight: 700; color: var(--ink); display: block; }
 .overview-label { font-size: 13px; color: var(--ink-muted); }
-
-/* Coming soon */
 .coming-soon { text-align: center; font-size: 48px; padding: 40px; }
 
-/* 头像颜色 */
 .bg-blue { background: linear-gradient(135deg, #1877f2, #42a5f5); }
 .bg-green { background: linear-gradient(135deg, #42b72a, #66bb6a); }
 .bg-purple { background: linear-gradient(135deg, #a033c0, #ce93d8); }
